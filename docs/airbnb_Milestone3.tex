@@ -1,0 +1,1984 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{airbnb\_Milestone3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Airbnb Pricing Prediction: Milestone
+3}\label{airbnb-pricing-prediction-milestone-3}
+
+\textbf{James Gearheart} \textbf{Danny Zhuang} \textbf{Bob Saludo}
+\textbf{Ryan Wallace} \textbf{Harvard University} \textbf{Fall 2016}
+\textbf{TF: Christine Hwang} \textbf{Due Date: } Saturday, November 5th,
+2016
+
+    \subsection{Summary of Work and
+Insights}\label{summary-of-work-and-insights}
+
+\subsubsection{Data Overview}\label{data-overview}
+
+\paragraph{Formatting}\label{formatting}
+
+The data was retrieved from the data.beta.nyc website by zip file
+download. The only complication in storing the data is that since the
+file sizes are over 100MB, the files can not be stored on GitHub. If it
+proves necessary, GitHub Large File Storage may provide a solution for
+this issue.
+
+In each of the three datasets, (listings, calendar, and reviews), the
+data are well formatted overall in CSV format with one record (listing,
+listing-date, or review, respectively) per row. Given the varied nature
+of the data, Pandas is a good choice for initial processing, and each of
+the three datasets is read into its own Pandas data frame. Manual
+examination of the data shows that the `id' field in the listings data
+set corresponds to the `listing\_id' fields in the reviews and calendar
+data, so joining on these fields is feasible, as demonstrated in the
+proof of concept above.
+
+There are occasional formatting irregularities throughout the data that
+have been fixed. For example, some fields contained excess parentheses
+or string data types where floats or booleans are more appropriate. The
+price fields were orignally encoded as strings with dollar sign and
+comma values. These were converted to floats for use in learning models.
+
+\paragraph{Missing Values}\label{missing-values}
+
+While the datasets are very complete on average, there are a significant
+number of missing values. In the listings dataset, roughly 30\% of all
+review scores, the vast majority of the square footage values, and low
+percentages of other listing characteristics are missing. In the
+calendar dataset, 28\% of the listing-dates do not have price
+information. In the reviews dataset, an insignificant number of comments
+are missing.
+
+The missing values were handled in various ways to suit the nature of
+the data. Missing price data is a roadblock because it is inadvisable to
+attempt to impute missing response variables. Thus, records with missing
+price data are dropped. For categorical variables, it is imagninable
+that knowing which listings have descriptors absent is associated with
+the price (likely in a negative fashion). Therefore, missing categorical
+values were replaced with a new category `unspecified'. Missing review
+values were imputed with the global mean, as the correlation between
+price and the majority of review metrics is so low that attempting to
+use regression for imputation would be useless. Likewise, the data are
+too noisy for KNN to be of use. For other continuous feature variables
+such as bedrooms, bathrooms, and beds with relatively high correlation
+with price, missing values were imputed using linear regression.
+
+After all imputation was finished, the only missing values were those of
+weekly and monthly prices. These missing values are potential response
+variables, and will be dealt with on an individual model basis.
+
+\paragraph{Size of Data}\label{size-of-data}
+
+There are a total of about 27,000 listings in the listings data set,
+each with 52 features. The calendar dataset contains one entry for each
+day of the year for each of the approximately 27,000 listings. The
+reviews dataset contains about 28,000 reviews for about 19,000 distinct
+listings.
+
+After cleaning, the majority of the data remains. All of the orignal
+listings remain in the data; over 70\% of the calendar records are
+useful; and the vast majority of the reviews have complete comments.
+
+\subsubsection{Features and their
+Distributions}\label{features-and-their-distributions}
+
+There are three potential response variables in the data, nighly price,
+weekly price, and mothly price. Since over half of the weekly and
+monthly price data are not present, it seems reasonable to focus on
+predicting nightly price. Nightly prices are right-skewed, with a few
+very high outliers. The majority of the prices are below 300 dollars per
+night. The price distribution looks approximately lognormal, so a log
+transformation of the price variable resulting in a normal distribution
+of prices may play better with regression techniques.
+
+There are over fifty predictors in the listings dataset, both continuous
+and categorical. Histograms of the continuous variables of interest and
+lists of the most frequent categorical variables of interest appear
+above. Interesting factors to note are that the majority of listings
+have one bedroom and one bathroom, and that reviews are extremely
+left-skewed.
+
+\subsubsection{Visualize the supply/price of Airbnb homes by
+location}\label{visualize-the-supplyprice-of-airbnb-homes-by-location}
+
+We notice that in general, the overwhelming majority of rental
+properties are concentrated in the center of the grid (between 40.6 -
+40.9 Latitude, and -73.8 - -74.1 Longitude. Outside of this dense range,
+we have sparse units in the outskirts of NYC which are predominantly
+listed under the `unspecified' category for neighborhood and are own the
+lower end of the pricing spectrum.
+
+On the whole, the most expensive rentals are in the area around 40.7
+Latitude and -74.0 Longitude. As we move outwards in all directions,
+prices generally become less expensive. One possible way that we could
+use this observation is to determine the epicenter in terms of
+high-priced housing, and then calculate the euclidean distance column
+for all points in the dataset and adding this distance into our model as
+a predictor. Additionally, we could use the neighborhood predictor
+variable in our model because the top 10 neighborhoods are each separate
+and extremely concentrated. We think it is logical to suspect that there
+will be clear differences between the neighborhoods of NYC, with
+clustering within the neighborhoods and at least some pricing separation
+between the neighborhoods. We see this in the average rental prices for
+each of the 191 neighborhoods in our dataset that we have printed above.
+
+For our final presentation, we would likely want to re-produce these
+scatterplots except using the map of NYC as the background instead of a
+whitespace background.
+
+\subsubsection{Correlations between Price and
+Features}\label{correlations-between-price-and-features}
+
+The Pearson correlations between price and each feature variable of
+interest is plotted above in decreasing order of correlation. From the
+chart, we see that the basic physical features of the listings are most
+strongly linearly related with price: number of individuals accomodated,
+number of beds and bedrooms, and number of bathrooms have the highest
+correlation values. The strongest negative linear relationships with
+price are for the number of listings by the given host, number of
+reviews, and the longitude of the listing. These results all make
+intuitive sense. Hosts with many listings may be less attentive to their
+tenants, tenants may be more inclined to leave a negative review, and
+knowledge of the demographics of New York supports the observed negative
+relationship between price and longitude.
+
+While studying these correlation values are useful, they only describe
+the magnitude of the linear relationship between price and the
+predictors, so additional visual anlaysis is necessary.
+
+\subsubsection{Relationship between Price and
+Time}\label{relationship-between-price-and-time}
+
+There are strong and interestings relationships between the prices of
+listings and both the time of year and the day of the week. Two
+different sets of statistics were computed to investigate these
+relationships. First, the simple average price over all the listings was
+calculated for each day of the year, and for each day of the week. Since
+this may overlook certain patterns, the differences between the price of
+a property on each day of the year and its average price throughout the
+year was also calculated, and averaged accross all the properties for
+each day of the year.
+
+Both sets of metrics show very similar trends. Late in the month of
+January is very cheap: all of the fifteen dates with the largest
+negative average difference from mean listing price occurred in the
+month of January. Most dates are up to 8 dollars cheaper on average. In
+striking contrast, early January (presumably because of New Years
+celebrations) are the most expensive, with the first few days averaging
+over 10 dollars more expensive than usual. The spring and early summer
+months are also more expensive by about 5 dollars on average for peak
+times.
+
+The relationship between the day of the week and the average difference
+in listing price from its mean is also very strong. Weekdays and Sunday
+are all similarly priced. However, Fridays and Saturdays average 3.50
+dollars more expensive than weeknights.
+
+In the modelling stage, it is clear that time (in terms of both date and
+day of the week) will be an important feature. The interaction between
+the date and day of the week may also prove helpful.
+
+\subsubsection{Analyze Target Variable and need for
+Transformation}\label{analyze-target-variable-and-need-for-transformation}
+
+The target variable of ``price'' was analyzed to determine the
+variable's skewness. Histograms and boxplots were created to visualize
+the distribution of the target variable. These visualizations confirmed
+that price is highly skewed to the right. This indicates that the price
+variable contains several extreme outliers and the need to transform
+this variable to ensure that it is normally distributed and prepared for
+predictive modeling.
+
+The ``price'' variable was log transformed and new visualizations were
+created to demonstrate the normal distribution of the log transformed
+target variable. Boxplots were also created to demonstrate that the
+transformation contained the outliers. Several additional visualizations
+were created that plotted the log transformed target variable against
+several of the possible preditors.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} import necessary libraries}
+        \PY{k+kn}{import} \PY{n+nn}{csv}
+        \PY{k+kn}{import} \PY{n+nn}{datetime}
+        \PY{k+kn}{import} \PY{n+nn}{operator}
+        \PY{k+kn}{from} \PY{n+nn}{mpl\PYZus{}toolkits.mplot3d} \PY{k+kn}{import} \PY{n}{Axes3D}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k+kn}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn.linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression} \PY{k}{as} \PY{n}{LinReg}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Read and Format Data}\label{read-and-format-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} remove commas from prices in calendar CSV}
+        \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{datasets/calendar.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{,} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{datasets/calendar\PYZus{}cleaned.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{wb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{g}\PY{p}{:}
+            \PY{n}{writer} \PY{o}{=} \PY{n}{csv}\PY{o}{.}\PY{n}{writer}\PY{p}{(}\PY{n}{g}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{f}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} split into four columns}
+                \PY{n}{row} \PY{o}{=} \PY{n}{line}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
+                \PY{n}{writer}\PY{o}{.}\PY{n}{writerow}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+                
+        \PY{c+c1}{\PYZsh{} read the three datasets}
+        \PY{n}{listings\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{datasets/listings.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{reviews\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{datasets/reviews.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{calendar\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{datasets/calendar\PYZus{}cleaned.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listings dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+listings dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:}         id     scrape\_id last\_scraped                                 name  \textbackslash{}
+        0  1069266  2.015010e+13       1/2/15        Stay like a real New Yorker!    
+        1  1846722  2.015010e+13       1/2/15    Apartment 20 Minutes Times Square   
+        2  2061725  2.015010e+13       1/2/15  Option of 2 Beds w Private Bathroom   
+        3    44974  2.015010e+13       1/3/15  Charming Bright West Village Studio   
+        4  4701675  2.015010e+13       1/2/15        Charming Apartment in Chelsea   
+        
+                                                 picture\_url   host\_id host\_name  \textbackslash{}
+        0  https://a0.muscache.com/pictures/50276484/larg{\ldots}   5867023   Michael   
+        1  https://a1.muscache.com/pictures/35865039/larg{\ldots}   2631556    Denise   
+        2  https://a2.muscache.com/pictures/50650147/larg{\ldots}   4601412      Miao   
+        3  https://a1.muscache.com/pictures/20489905/larg{\ldots}    198425      Sara   
+        4  https://a2.muscache.com/pictures/60588955/larg{\ldots}  22590025   Charles   
+        
+          host\_since                                   host\_picture\_url  \textbackslash{}
+        0    4/10/13  https://a2.muscache.com/ic/users/5867023/profi{\ldots}   
+        1    6/13/12  https://a2.muscache.com/ic/users/2631556/profi{\ldots}   
+        2     1/5/13  https://a0.muscache.com/ic/users/4601412/profi{\ldots}   
+        3    8/11/10  https://a0.muscache.com/ic/users/198425/profil{\ldots}   
+        4   10/15/14  https://a2.muscache.com/ic/users/22590025/prof{\ldots}   
+        
+                                                      street        {\ldots}          \textbackslash{}
+        0  East 53rd Street, New York, NY 10022, United S{\ldots}        {\ldots}           
+        1     West 155th Street, New York, NY, United States        {\ldots}           
+        2  Van Buren Street, Brooklyn, NY 11221, United S{\ldots}        {\ldots}           
+        3   Greenwich Ave, New York, NY 10011, United States        {\ldots}           
+        4  West 22nd Street, New York, NY 10011, United S{\ldots}        {\ldots}           
+        
+          first\_review last\_review review\_scores\_rating review\_scores\_accuracy  \textbackslash{}
+        0      4/28/13    12/17/14                 86.0                    9.0   
+        1       1/5/14    12/29/14                 85.0                    8.0   
+        2       2/4/14    12/29/14                 98.0                   10.0   
+        3      10/8/10    10/30/14                 96.0                   10.0   
+        4      12/8/14     12/8/14                100.0                   10.0   
+        
+          review\_scores\_cleanliness review\_scores\_checkin review\_scores\_communication  \textbackslash{}
+        0                       7.0                   9.0                         9.0   
+        1                       8.0                   9.0                         8.0   
+        2                      10.0                  10.0                        10.0   
+        3                       9.0                  10.0                        10.0   
+        4                      10.0                  10.0                        10.0   
+        
+           review\_scores\_location  review\_scores\_value host\_listing\_count  
+        0                    10.0                  9.0                  1  
+        1                     7.0                  8.0                  2  
+        2                     9.0                 10.0                  4  
+        3                    10.0                  9.0                  1  
+        4                    10.0                 10.0                  1  
+        
+        [5 rows x 52 columns]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviews dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+reviews dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:}    listing\_id        id        date  reviewer\_id reviewer\_name  \textbackslash{}
+        0     1180670  14705995  2014-06-24     10875598       Gregory   
+        1     4457617  24432844  2014-12-28     24502047         Amber   
+        2      722394   9248781  2013-12-16      6821360          Giri   
+        3     4074444  23983183  2014-12-15      8822691         Wendy   
+        4       68046  11797670  2014-04-15     12231047      Virginie   
+        
+                                                    comments  
+        0  Ok, if you like the location and don't mind an{\ldots}  
+        1  Kleine süße WG, super gelegen, sehr freundlich{\ldots}  
+        2                            Extremely disappointed.  
+        3                              Exactly as described.  
+        4  Appartement très sympa, accueillant. A quelque{\ldots}  
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calendar dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+calendar dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:}    "listing\_id"        "date" "available"  "price"\textbackslash{}n
+        0       3604481  "2015-01-01"           t  \$600.00\textbackslash{}n
+        1       3604481  "2015-01-02"           t  \$600.00\textbackslash{}n
+        2       3604481  "2015-01-03"           t  \$600.00\textbackslash{}n
+        3       3604481  "2015-01-04"           t  \$600.00\textbackslash{}n
+        4       3604481  "2015-01-05"           t  \$600.00\textbackslash{}n
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} method to smartly convert price strings to floats}
+        \PY{k}{def} \PY{n+nf}{convert\PYZus{}float}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{:}
+            \PY{k}{try}\PY{p}{:}
+                \PY{k}{if} \PY{n+nb}{type}\PY{p}{(}\PY{n}{val}\PY{p}{)} \PY{o}{==} \PY{n+nb}{float}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{val}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{k}{return} \PY{n+nb}{float}\PY{p}{(}\PY{n}{val}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{k}{except} \PY{n+ne}{ValueError}\PY{p}{:}
+                \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{nan}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} fix wonky formatting of data and field names}
+        \PY{c+c1}{\PYZsh{} remove surronding parens and newlines from column names}
+        \PY{n}{old\PYZus{}columns} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values} 
+        \PY{n}{new\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{n}{col}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{old\PYZus{}columns}\PY{p}{]} 
+        \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{new\PYZus{}columns}
+        
+        \PY{n}{old\PYZus{}columns} \PY{o}{=} \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values} 
+        \PY{n}{new\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{n}{col}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{old\PYZus{}columns}\PY{p}{]} 
+        \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{new\PYZus{}columns}
+        
+        \PY{n}{old\PYZus{}columns} \PY{o}{=} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values} 
+        \PY{n}{new\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{n}{col}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{old\PYZus{}columns}\PY{p}{]} 
+        \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{new\PYZus{}columns}
+        
+        \PY{c+c1}{\PYZsh{} remove parens around date in calendar\PYZus{}df}
+        \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} change t and f to 1 and 0 in calendar\PYZus{}df}
+        \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{available}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{available}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{l+m+mi}{1} \PY{k}{if} \PY{n}{x} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{l+m+mi}{0} \PY{k}{if} \PY{n}{x} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f}\PY{l+s+s1}{\PYZsq{}} \PY{k}{else} \PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} change string types to floats when possible}
+        \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{convert\PYZus{}float}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+        \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{convert\PYZus{}float}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+        \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{monthly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{monthly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{convert\PYZus{}float}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+        \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{convert\PYZus{}float}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listings dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+listings dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:}         id     scrape\_id last\_scraped                                 name  \textbackslash{}
+        0  1069266  2.015010e+13       1/2/15        Stay like a real New Yorker!    
+        1  1846722  2.015010e+13       1/2/15    Apartment 20 Minutes Times Square   
+        2  2061725  2.015010e+13       1/2/15  Option of 2 Beds w Private Bathroom   
+        3    44974  2.015010e+13       1/3/15  Charming Bright West Village Studio   
+        4  4701675  2.015010e+13       1/2/15        Charming Apartment in Chelsea   
+        
+                                                 picture\_url   host\_id host\_name  \textbackslash{}
+        0  https://a0.muscache.com/pictures/50276484/larg{\ldots}   5867023   Michael   
+        1  https://a1.muscache.com/pictures/35865039/larg{\ldots}   2631556    Denise   
+        2  https://a2.muscache.com/pictures/50650147/larg{\ldots}   4601412      Miao   
+        3  https://a1.muscache.com/pictures/20489905/larg{\ldots}    198425      Sara   
+        4  https://a2.muscache.com/pictures/60588955/larg{\ldots}  22590025   Charles   
+        
+          host\_since                                   host\_picture\_url  \textbackslash{}
+        0    4/10/13  https://a2.muscache.com/ic/users/5867023/profi{\ldots}   
+        1    6/13/12  https://a2.muscache.com/ic/users/2631556/profi{\ldots}   
+        2     1/5/13  https://a0.muscache.com/ic/users/4601412/profi{\ldots}   
+        3    8/11/10  https://a0.muscache.com/ic/users/198425/profil{\ldots}   
+        4   10/15/14  https://a2.muscache.com/ic/users/22590025/prof{\ldots}   
+        
+                                                      street        {\ldots}          \textbackslash{}
+        0  East 53rd Street, New York, NY 10022, United S{\ldots}        {\ldots}           
+        1     West 155th Street, New York, NY, United States        {\ldots}           
+        2  Van Buren Street, Brooklyn, NY 11221, United S{\ldots}        {\ldots}           
+        3   Greenwich Ave, New York, NY 10011, United States        {\ldots}           
+        4  West 22nd Street, New York, NY 10011, United S{\ldots}        {\ldots}           
+        
+          first\_review last\_review review\_scores\_rating review\_scores\_accuracy  \textbackslash{}
+        0      4/28/13    12/17/14                 86.0                    9.0   
+        1       1/5/14    12/29/14                 85.0                    8.0   
+        2       2/4/14    12/29/14                 98.0                   10.0   
+        3      10/8/10    10/30/14                 96.0                   10.0   
+        4      12/8/14     12/8/14                100.0                   10.0   
+        
+          review\_scores\_cleanliness review\_scores\_checkin review\_scores\_communication  \textbackslash{}
+        0                       7.0                   9.0                         9.0   
+        1                       8.0                   9.0                         8.0   
+        2                      10.0                  10.0                        10.0   
+        3                       9.0                  10.0                        10.0   
+        4                      10.0                  10.0                        10.0   
+        
+           review\_scores\_location  review\_scores\_value host\_listing\_count  
+        0                    10.0                  9.0                  1  
+        1                     7.0                  8.0                  2  
+        2                     9.0                 10.0                  4  
+        3                    10.0                  9.0                  1  
+        4                    10.0                 10.0                  1  
+        
+        [5 rows x 52 columns]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviews dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+reviews dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:}    listing\_id        id        date  reviewer\_id reviewer\_name  \textbackslash{}
+         0     1180670  14705995  2014-06-24     10875598       Gregory   
+         1     4457617  24432844  2014-12-28     24502047         Amber   
+         2      722394   9248781  2013-12-16      6821360          Giri   
+         3     4074444  23983183  2014-12-15      8822691         Wendy   
+         4       68046  11797670  2014-04-15     12231047      Virginie   
+         
+                                                     comments  
+         0  Ok, if you like the location and don't mind an{\ldots}  
+         1  Kleine süße WG, super gelegen, sehr freundlich{\ldots}  
+         2                            Extremely disappointed.  
+         3                              Exactly as described.  
+         4  Appartement très sympa, accueillant. A quelque{\ldots}  
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calendar dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+calendar dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:}    listing\_id        date  available  price
+         0     3604481  2015-01-01          1  600.0
+         1     3604481  2015-01-02          1  600.0
+         2     3604481  2015-01-03          1  600.0
+         3     3604481  2015-01-04          1  600.0
+         4     3604481  2015-01-05          1  600.0
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} examine size of data}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Listings Data: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{number of listings: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Calendar Data: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{number of listing\PYZhy{}dates: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of distinct listings on calendar: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of dates on calendar per listing: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Reviews Data: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{number of reviews: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of distinct listings reviewed: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Listings Data: 
+number of listings:  27392
+
+Calendar Data: 
+number of listing-dates:  9998080
+number of distinct listings on calendar:  27392
+number of dates on calendar per listing:  365
+
+Reviews Data: 
+number of reviews:  277659
+number of distinct listings reviewed:  19028
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} determine which values features have missing data}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Listings Missing Data:}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+             \PY{n}{num\PYZus{}nulls} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}nulls} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{feature} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{l+m+mi}{100} \PY{o}{*} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+                 
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Calendar Missing Data:}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+             \PY{n}{num\PYZus{}nulls} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}nulls} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{feature} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{l+m+mi}{100} \PY{o}{*} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+            
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Reviews Missing Data:}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+             \PY{n}{num\PYZus{}nulls} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}nulls} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{feature} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{l+m+mi}{100} \PY{o}{*} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Listings Missing Data:
+	neighbourhood: 2027, 7.0\%
+	state: 2, 0.0\%
+	zipcode: 162, 1.0\%
+	country: 1, 0.0\%
+	property\_type: 6, 0.0\%
+	bathrooms: 463, 2.0\%
+	bedrooms: 140, 1.0\%
+	beds: 98, 0.0\%
+	square\_feet: 26386, 96.0\%
+	weekly\_price: 15374, 56.0\%
+	monthly\_price: 17558, 64.0\%
+	first\_review: 8364, 31.0\%
+	last\_review: 8364, 31.0\%
+	review\_scores\_rating: 8657, 32.0\%
+	review\_scores\_accuracy: 8727, 32.0\%
+	review\_scores\_cleanliness: 8731, 32.0\%
+	review\_scores\_checkin: 8729, 32.0\%
+	review\_scores\_communication: 8731, 32.0\%
+	review\_scores\_location: 8732, 32.0\%
+	review\_scores\_value: 8734, 32.0\%
+
+Calendar Missing Data:
+	price: 2796197, 28.0\%
+
+Reviews Missing Data:
+	comments: 164, 0.0\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} impute missing data}
+         \PY{c+c1}{\PYZsh{} some features can be dropped because they are all the same}
+         \PY{n}{listings\PYZus{}df} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{country}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{errors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} there is so little of some data it is useless}
+         \PY{n}{listings\PYZus{}df} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{square\PYZus{}feet}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{errors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} some data is necessary so observations must be dropped}
+         \PY{n}{calendar\PYZus{}df} \PY{o}{=} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{pd}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+         \PY{n}{reviews\PYZus{}df} \PY{o}{=} \PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{n}{pd}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{comments}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} review dates are mostly irrelevant }
+         \PY{n}{listings\PYZus{}df} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{first\PYZus{}review}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{last\PYZus{}review}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{errors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} neighbourhood, is categorical, so create new \PYZsq{}unspecified\PYZsq{} category to avoid biasing results}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neighbourhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neighbourhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{unspecified}\PY{l+s+s1}{\PYZsq{}} \PY{k}{if} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} impute zipcode and property\PYZus{}type with modes}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zipcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zipcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{l+m+mi}{11211} \PY{k}{if} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{property\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{property\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Apartment}\PY{l+s+s1}{\PYZsq{}} \PY{k}{if} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} weekly and montly price are response variables so missing values can be dropped when }
+         \PY{c+c1}{\PYZsh{} specifically predicting these values}
+         
+         \PY{c+c1}{\PYZsh{} reviews have low correlation with price; no KNN too costly, use means}
+         \PY{n}{review\PYZus{}scores\PYZus{}rating\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}accuracy\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}cleanliness\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}cleanliness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}checkin\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}checkin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}communication\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}communication}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}location\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}value\PYZus{}mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}rating\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}accuracy\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}cleanliness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}cleanliness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}cleanliness\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}checkin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}checkin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}checkin\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}communication}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}communication}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}communication\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}location\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} 
+             \PY{n}{review\PYZus{}scores\PYZus{}value\PYZus{}mean} \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{else} \PY{n}{x}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} bathrooms, bedrooms, beds have relatively high correlation with price so impute with linear regression}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{beds}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{model} \PY{o}{=} \PY{n}{LinReg}\PY{p}{(}\PY{p}{)}
+             \PY{n}{Xy} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{p}{[}\PY{n}{feature}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+             \PY{n}{Xy} \PY{o}{=} \PY{n}{Xy}\PY{p}{[}\PY{n}{pd}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{n}{Xy}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+             \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{Xy}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{Xy}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{set\PYZus{}value}\PY{p}{(}\PY{n}{index}\PY{p}{,} \PY{n}{feature}\PY{p}{,} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} see what missing values remain}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Listings Missing Data (after cleaning):}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+             \PY{n}{num\PYZus{}nulls} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}nulls} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{feature} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{l+m+mi}{100} \PY{o}{*} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+                 
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Calendar Missing Data (after cleaning):}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+             \PY{n}{num\PYZus{}nulls} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}nulls} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{feature} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{l+m+mi}{100} \PY{o}{*} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+            
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Reviews Missing Data (after cleaning):}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+             \PY{n}{num\PYZus{}nulls} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{num\PYZus{}nulls} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{feature} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{l+m+mi}{100} \PY{o}{*} \PY{n+nb}{float}\PY{p}{(}\PY{n}{num\PYZus{}nulls}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+            
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Listings Missing Data (after cleaning):
+	weekly\_price: 15374, 56.0\%
+	monthly\_price: 17558, 64.0\%
+
+Calendar Missing Data (after cleaning):
+
+Reviews Missing Data (after cleaning):
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} examine size of data after cleaning}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Listings Data: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{number of listings (cleaned): }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Calendar Data: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{number of listing\PYZhy{}dates (cleaned): }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of distinct listings on calendar (cleaned): }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of dates on calendar per listing (cleaned): }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Reviews Data: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{number of reviews (cleaned): }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of distinct listings reviewed (cleaned): }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Listings Data: 
+number of listings (cleaned):  27392
+
+Calendar Data: 
+number of listing-dates (cleaned):  7201883
+number of distinct listings on calendar (cleaned):  26803
+number of dates on calendar per listing (cleaned):  268
+
+Reviews Data: 
+number of reviews (cleaned):  277495
+number of distinct listings reviewed (cleaned):  19025
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} merge listings and reviews by listing\PYZus{}id \PYZhy{} proof of concept}
+         \PY{c+c1}{\PYZsh{} first standardize column name}
+         \PY{n}{new\PYZus{}columns} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values} 
+         \PY{n}{new\PYZus{}columns}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}} 
+         \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{new\PYZus{}columns}
+         
+         \PY{c+c1}{\PYZsh{} merge listings and reviews (only one per listing) by listing\PYZus{}id}
+         \PY{c+c1}{\PYZsh{} left merge because only reviews with listing info are valuable}
+         \PY{n}{listings\PYZus{}reviews\PYZus{}df} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{reviews\PYZus{}df}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{how}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lsuffix}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}listing}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{combined listing and reviews dataframe: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{listings\PYZus{}reviews\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+combined listing and reviews dataframe: 
+
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:}    listing\_id\_listing     scrape\_id last\_scraped  \textbackslash{}
+         0             1069266  2.015010e+13       1/2/15   
+         1             1846722  2.015010e+13       1/2/15   
+         2             2061725  2.015010e+13       1/2/15   
+         3               44974  2.015010e+13       1/3/15   
+         4             4701675  2.015010e+13       1/2/15   
+         
+                                           name  \textbackslash{}
+         0        Stay like a real New Yorker!    
+         1    Apartment 20 Minutes Times Square   
+         2  Option of 2 Beds w Private Bathroom   
+         3  Charming Bright West Village Studio   
+         4        Charming Apartment in Chelsea   
+         
+                                                  picture\_url   host\_id host\_name  \textbackslash{}
+         0  https://a0.muscache.com/pictures/50276484/larg{\ldots}   5867023   Michael   
+         1  https://a1.muscache.com/pictures/35865039/larg{\ldots}   2631556    Denise   
+         2  https://a2.muscache.com/pictures/50650147/larg{\ldots}   4601412      Miao   
+         3  https://a1.muscache.com/pictures/20489905/larg{\ldots}    198425      Sara   
+         4  https://a2.muscache.com/pictures/60588955/larg{\ldots}  22590025   Charles   
+         
+           host\_since                                   host\_picture\_url  \textbackslash{}
+         0    4/10/13  https://a2.muscache.com/ic/users/5867023/profi{\ldots}   
+         1    6/13/12  https://a2.muscache.com/ic/users/2631556/profi{\ldots}   
+         2     1/5/13  https://a0.muscache.com/ic/users/4601412/profi{\ldots}   
+         3    8/11/10  https://a0.muscache.com/ic/users/198425/profil{\ldots}   
+         4   10/15/14  https://a2.muscache.com/ic/users/22590025/prof{\ldots}   
+         
+                                                       street  \textbackslash{}
+         0  East 53rd Street, New York, NY 10022, United S{\ldots}   
+         1     West 155th Street, New York, NY, United States   
+         2  Van Buren Street, Brooklyn, NY 11221, United S{\ldots}   
+         3   Greenwich Ave, New York, NY 10011, United States   
+         4  West 22nd Street, New York, NY 10011, United S{\ldots}   
+         
+                                  {\ldots}                          \textbackslash{}
+         0                        {\ldots}                           
+         1                        {\ldots}                           
+         2                        {\ldots}                           
+         3                        {\ldots}                           
+         4                        {\ldots}                           
+         
+           review\_scores\_communication review\_scores\_location review\_scores\_value  \textbackslash{}
+         0                         9.0                   10.0                 9.0   
+         1                         8.0                    7.0                 8.0   
+         2                        10.0                    9.0                10.0   
+         3                        10.0                   10.0                 9.0   
+         4                        10.0                   10.0                10.0   
+         
+           host\_listing\_count listing\_id          id        date reviewer\_id  \textbackslash{}
+         0                  1        NaN         NaN         NaN         NaN   
+         1                  2        NaN         NaN         NaN         NaN   
+         2                  4        NaN         NaN         NaN         NaN   
+         3                  1   871973.0  15182818.0  2014-07-04  15393693.0   
+         4                  1        NaN         NaN         NaN         NaN   
+         
+           reviewer\_name                                           comments  
+         0           NaN                                                NaN  
+         1           NaN                                                NaN  
+         2           NaN                                                NaN  
+         3         Maeva  Very comfortable bed, plenty of room in the dr{\ldots}  
+         4           NaN                                                NaN  
+         
+         [5 rows x 53 columns]
+\end{Verbatim}
+        
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Examine Fields}\label{examine-fields}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{} investigate fields}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listings fields:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{k}{for} \PY{n}{field} \PY{o+ow}{in} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{field}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{calendar fields:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{k}{for} \PY{n}{field} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{field}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{ reviews fields:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{k}{for} \PY{n}{field} \PY{o+ow}{in} \PY{n}{reviews\PYZus{}df}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{:} \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{field}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+listings fields:
+	listing\_id
+	scrape\_id
+	last\_scraped
+	name
+	picture\_url
+	host\_id
+	host\_name
+	host\_since
+	host\_picture\_url
+	street
+	neighbourhood
+	neighbourhood\_cleansed
+	city
+	zipcode
+	market
+	latitude
+	longitude
+	is\_location\_exact
+	property\_type
+	room\_type
+	accommodates
+	bathrooms
+	bedrooms
+	beds
+	bed\_type
+	price
+	weekly\_price
+	monthly\_price
+	guests\_included
+	extra\_people
+	minimum\_nights
+	maximum\_nights
+	calendar\_updated
+	availability\_30
+	availability\_60
+	availability\_90
+	availability\_365
+	calendar\_last\_scraped
+	number\_of\_reviews
+	review\_scores\_rating
+	review\_scores\_accuracy
+	review\_scores\_cleanliness
+	review\_scores\_checkin
+	review\_scores\_communication
+	review\_scores\_location
+	review\_scores\_value
+	host\_listing\_count
+
+calendar fields:
+	listing\_id
+	date
+	available
+	price
+
+ reviews fields:
+	listing\_id
+	id
+	date
+	reviewer\_id
+	reviewer\_name
+	comments
+
+    \end{Verbatim}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Examine Values}\label{examine-values}
+
+\subsubsection{Distribution of Data}\label{distribution-of-data}
+
+Let's first investigate the spread of individual variables of interest.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} plots a simple histogram of the data, x.}
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{title}\PY{p}{,} \PY{n}{ax}\PY{p}{,} \PY{n}{num\PYZus{}bins}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Plot data}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{bins}\PY{o}{=}\PY{n}{num\PYZus{}bins}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Label axes, set title}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{ax}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} np arrays for numerical series}
+         \PY{n}{price} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{weekly\PYZus{}price} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{monthly\PYZus{}price} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{monthly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} remove out outliers}
+         \PY{n}{price\PYZus{}out} \PY{o}{=} \PY{p}{[}\PY{n}{p} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{price} \PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mi}{600}\PY{p}{]}
+         \PY{n}{weekly\PYZus{}price\PYZus{}out} \PY{o}{=} \PY{p}{[}\PY{n}{p} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{weekly\PYZus{}price} \PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mi}{5000}\PY{p}{]}
+         \PY{n}{monthly\PYZus{}price\PYZus{}out} \PY{o}{=} \PY{p}{[}\PY{n}{p} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{monthly\PYZus{}price} \PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mi}{15000}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} price related variables}
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{price}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prices in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{price\PYZus{}out}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prices in Listings Data (less outliers)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{weekly\PYZus{}price}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weekly Prices in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{weekly\PYZus{}price\PYZus{}out}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weekly Prices in Listings Data (less outliers)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{monthly\PYZus{}price}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Monthly Prices in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{monthly\PYZus{}price\PYZus{}out}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Monthly Prices in Listings Data (less outliers)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_27_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} accomodations related variables}
+         \PY{n}{accommodates} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accommodates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{bathrooms} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{bedrooms} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{beds} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{beds}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{accommodates}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number Accomondated in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{bathrooms}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Bathrooms in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{bedrooms}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Bedrooms in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{beds}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Beds in Listings Data }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{} reviews related variables}
+         \PY{n}{number\PYZus{}of\PYZus{}reviews} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number\PYZus{}of\PYZus{}reviews}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{review\PYZus{}scores\PYZus{}rating} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{review\PYZus{}scores\PYZus{}accuracy} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{review\PYZus{}scores\PYZus{}cleanliness} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}cleanliness}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{review\PYZus{}scores\PYZus{}checkin} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}checkin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{review\PYZus{}scores\PYZus{}communication} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}communication}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{review\PYZus{}scores\PYZus{}location} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         \PY{n}{review\PYZus{}scores\PYZus{}value} \PY{o}{=} \PY{p}{[}\PY{n}{val} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{p}{]}
+         
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{number\PYZus{}of\PYZus{}reviews}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Reviews in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}rating}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Overall Reviews in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}accuracy}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy Reviews in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}cleanliness}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cleanliness Reviews in Listings Data }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}checkin}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Check\PYZhy{}In Reviews in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}communication}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Communication Reviews in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}location}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Location Reviews in Listings Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{plot\PYZus{}histogram}\PY{p}{(}\PY{n}{review\PYZus{}scores\PYZus{}value}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Value Reviews in Listings Data }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_29_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{c+c1}{\PYZsh{} categorical geographical variables by examining most frequent entries}
+         \PY{n}{top\PYZus{}neighborhood} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neighbourhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}dict}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{n}{operator}\PY{o}{.}\PY{n}{itemgetter}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+         \PY{n}{top\PYZus{}zipcode} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zipcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}dict}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{n}{operator}\PY{o}{.}\PY{n}{itemgetter}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+         \PY{n}{top\PYZus{}property\PYZus{}type} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{property\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}dict}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{n}{operator}\PY{o}{.}\PY{n}{itemgetter}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+         
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Top Neighborhoods}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{top\PYZus{}neighborhood}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{:}
+             \PY{k}{print} \PY{n+nb}{str}\PY{p}{(}\PY{n}{k}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+             
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Top Zipcodes}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{top\PYZus{}zipcode}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{:}
+             \PY{k}{print} \PY{n+nb}{str}\PY{p}{(}\PY{n}{k}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+             
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Top Property Types}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{top\PYZus{}property\PYZus{}type}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{:}
+             \PY{k}{print} \PY{n+nb}{str}\PY{p}{(}\PY{n}{k}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Top Neighborhoods
+unspecified: 2027
+Williamsburg: 1878
+Upper West Side: 1307
+Upper East Side: 1183
+Hell's Kitchen: 1177
+Bedford-Stuyvesant: 1112
+Bushwick: 1023
+Lower East Side: 942
+Harlem: 861
+East Village: 842
+
+Top Zipcodes
+11211: 1200
+10002: 1130
+10009: 1062
+10003: 948
+10011: 855
+11238: 814
+10014: 797
+10019: 760
+11216: 697
+10012: 685
+
+Top Property Types
+Apartment: 24915
+House: 1575
+Loft: 601
+Bed \& Breakfast: 170
+Dorm: 49
+Other: 48
+Boat: 11
+Treehouse: 6
+Villa: 4
+Cabin: 3
+
+    \end{Verbatim}
+
+    \subsubsection{Visualize the supply of Airbnb homes by location and be
+sure to reflect the price of the average home in each
+region}\label{visualize-the-supply-of-airbnb-homes-by-location-and-be-sure-to-reflect-the-price-of-the-average-home-in-each-region}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{} plot 2D neighborhood to visualize supply of rental homes in each area with color gradient denoting price}
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}neighborhoods\PYZus{}by\PYZus{}price\PYZus{}2D}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{num\PYZus{}class} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{top\PYZus{}neighborhood}\PY{p}{)}
+             
+             \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{rgb\PYZus{}grad}\PY{p}{)}
+         
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price gradient for NYC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{k+kn}{import} \PY{n+nn}{matplotlib.patches} \PY{k+kn}{as} \PY{n+nn}{mpatches}
+             \PY{n}{classes} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Less expensive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{More expensive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{class\PYZus{}colours} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{recs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{class\PYZus{}colours}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{recs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{mpatches}\PY{o}{.}\PY{n}{Rectangle}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{fc}\PY{o}{=}\PY{n}{class\PYZus{}colours}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{recs}\PY{p}{,}\PY{n}{classes}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} plot 3D neighborhood to visualize supply of rental homes in each area with color gradient denoting price}
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}neighborhoods\PYZus{}by\PYZus{}price\PYZus{}3D}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{num\PYZus{}class} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{top\PYZus{}neighborhood}\PY{p}{)}
+             
+             \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{projection}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{rgb\PYZus{}grad}\PY{p}{)}
+         
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}zlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nightly Rental Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price gradient for NYC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{k+kn}{import} \PY{n+nn}{matplotlib.patches} \PY{k+kn}{as} \PY{n+nn}{mpatches}
+             \PY{n}{classes} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Less expensive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{More expensive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{class\PYZus{}colours} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{recs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{class\PYZus{}colours}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{recs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{mpatches}\PY{o}{.}\PY{n}{Rectangle}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{fc}\PY{o}{=}\PY{n}{class\PYZus{}colours}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{recs}\PY{p}{,}\PY{n}{classes}\PY{p}{,}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} plot neighborhood to visualize supply of rental homes in each area with color denoting neighborhood}
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}neighborhood\PYZus{}locations}\PY{p}{(}\PY{n}{num\PYZus{}neighborhoods}\PY{p}{,} \PY{n}{colors}\PY{p}{)}\PY{p}{:}
+             \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{15}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{num\PYZus{}class} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{top\PYZus{}neighborhood}\PY{p}{)}
+             \PY{k}{for} \PY{p}{(}\PY{n}{neighborhood}\PY{p}{,} \PY{n}{num}\PY{p}{)} \PY{o+ow}{in} \PY{n}{top\PYZus{}neighborhood}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{n}{num\PYZus{}neighborhoods}\PY{p}{]}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} adjust length of the printed neighborhood}
+                 \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{neighborhood}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mi}{20}\PY{p}{:}
+                     \PY{n}{legend\PYZus{}label} \PY{o}{=} \PY{n}{neighborhood}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{20}\PY{p}{]}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{legend\PYZus{}label} \PY{o}{=} \PY{n}{neighborhood}
+                 
+                 \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neighbourhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n+nb}{str}\PY{p}{(}\PY{n}{neighborhood}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+                            \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neighbourhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n+nb}{str}\PY{p}{(}\PY{n}{neighborhood}\PY{p}{)}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+                            \PY{n}{c}\PY{o}{=}\PY{n}{colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{legend\PYZus{}label}\PY{p}{)}
+                 \PY{n}{i} \PY{o}{=} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}
+         
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Top }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{num\PYZus{}neighborhoods}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ Neighbourhoods of NYC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{9}\PY{p}{,} \PY{n}{bbox\PYZus{}to\PYZus{}anchor}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1}\PY{p}{)}\PY{p}{,} \PY{n}{ncol}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} for calculating the rgb tuble for the given gradient; red = expensive, green = cheaper}
+         \PY{k}{def} \PY{n+nf}{rgb}\PY{p}{(}\PY{n}{minimum}\PY{p}{,} \PY{n}{maximum}\PY{p}{,} \PY{n}{value}\PY{p}{)}\PY{p}{:}
+             \PY{n}{minimum}\PY{p}{,} \PY{n}{maximum} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{minimum}\PY{p}{)}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{n}{maximum}\PY{p}{)}
+             \PY{n}{ratio} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{p}{(}\PY{n}{value}\PY{o}{\PYZhy{}}\PY{n}{minimum}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{maximum} \PY{o}{\PYZhy{}} \PY{n}{minimum}\PY{p}{)}
+             \PY{n}{r} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{255}\PY{o}{*}\PY{p}{(}\PY{n}{ratio} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{g} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{255}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{ratio}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{b} \PY{o}{=} \PY{l+m+mi}{255} \PY{o}{\PYZhy{}} \PY{n}{g} \PY{o}{\PYZhy{}} \PY{n}{r}
+             \PY{k}{return} \PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{r}\PY{o}{/}\PY{l+m+mf}{255.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{g}\PY{o}{/}\PY{l+m+mf}{255.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{b}\PY{o}{/}\PY{l+m+mf}{255.}\PY{p}{,} \PY{l+m+mf}{1.}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} build color matrix for coloring\PYZhy{}by\PYZhy{}neighborhood}
+         \PY{k+kn}{import} \PY{n+nn}{random}
+         \PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{colors}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{191}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} build color gradient by price (green \PYZhy{}\PYZgt{} red)}
+         \PY{n}{price} \PY{o}{=} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{price\PYZus{}min} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{price\PYZus{}out}\PY{p}{)}
+         \PY{n}{price\PYZus{}max} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{price\PYZus{}out}\PY{p}{)}
+         \PY{n}{rgb\PYZus{}grad} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{rgb}\PY{p}{(}\PY{n}{price\PYZus{}min}\PY{p}{,} \PY{n}{price\PYZus{}max}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{price}\PY{p}{]}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} plot top 10 most populous neighborhoods in NYC, coloring by neighborhood}
+         \PY{n}{plot\PYZus{}neighborhood\PYZus{}locations}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{colors}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot top 50 most populous neighborhoods in NYC, coloring by neighborhood}
+         \PY{n}{plot\PYZus{}neighborhood\PYZus{}locations}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{colors}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot all neighborhoods in NYC, coloring by neighborhood}
+         \PY{n}{plot\PYZus{}neighborhood\PYZus{}locations}\PY{p}{(}\PY{l+m+mi}{191}\PY{p}{,} \PY{n}{colors}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} plot all homes with color gradient (green \PYZhy{}\PYZgt{} red) denoting price}
+         \PY{n}{plot\PYZus{}neighborhoods\PYZus{}by\PYZus{}price\PYZus{}2D}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot all homes with color gradient (green \PYZhy{}\PYZgt{} red denoting price) with z\PYZhy{}axis price}
+         \PY{n}{plot\PYZus{}neighborhoods\PYZus{}by\PYZus{}price\PYZus{}3D}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_32_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_32_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_32_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_32_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{c+c1}{\PYZsh{} build numpy array of average home prices in each region}
+         \PY{n}{neighborhood\PYZus{}prices} \PY{o}{=} \PY{n}{top\PYZus{}neighborhood}
+         \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{for} \PY{p}{(}\PY{n}{neighborhood}\PY{p}{,} \PY{n}{num}\PY{p}{)} \PY{o+ow}{in} \PY{n}{top\PYZus{}neighborhood}\PY{p}{:}
+             \PY{n}{neighborhood\PYZus{}prices}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n}{neighborhood}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neighbourhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{neighborhood}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+             \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             
+         \PY{n}{neighborhood\PYZus{}prices}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} [['unspecified', 160.10557474099656],
+          ['Williamsburg', 141.77103301384452],
+          ['Upper West Side', 219.63045141545524],
+          ['Upper East Side', 202.34319526627218],
+          ["Hell's Kitchen", 221.71282922684793],
+          ['Bedford-Stuyvesant', 108.0341726618705],
+          ['Bushwick', 85.854349951124149],
+          ['Lower East Side', 185.75902335456476],
+          ['Harlem', 124.31126596980255],
+          ['East Village', 197.63895486935866],
+          ['Chelsea', 253.42839951865221],
+          ['Crown Heights', 107.24738219895288],
+          ['West Village', 265.93038821954485],
+          ['Alphabet City', 172.76512968299713],
+          ['East Harlem', 131.85128205128206],
+          ['Astoria', 107.58752166377816],
+          ['Greenpoint', 141.02631578947367],
+          ['Washington Heights', 110.08128544423441],
+          ['Park Slope', 153.54684512428298],
+          ['Clinton Hill', 185.64932562620425],
+          ['Hamilton Heights', 105.3507972665148],
+          ['Greenwich Village', 240.1846153846154],
+          ['Kips Bay', 249.80462724935734],
+          ['Financial District', 236.36559139784947],
+          ['Midtown East', 248.81440443213296],
+          ['Flatbush', 106.60778443113773],
+          ['Fort Greene', 153.97719869706842],
+          ['Chinatown', 168.2051282051282],
+          ['Soho', 310.12867647058823],
+          ['Morningside Heights', 133.45275590551182],
+          ['Gramercy Park', 217.1844262295082],
+          ['Lefferts Garden', 99.607594936708864],
+          ['Midtown', 219.84848484848484],
+          ['Murray Hill', 295.7837837837838],
+          ['Nolita', 240.69585253456222],
+          ['Prospect Heights', 129.48356807511738],
+          ['Boerum Hill', 187.18652849740931],
+          ['Flatiron District', 309.30337078651684],
+          ['Carroll Gardens', 181.46428571428572],
+          ['Tribeca', 397.63636363636363],
+          ['Long Island City', 159.57664233576642],
+          ['Sunset Park', 77.624060150375939],
+          ['Brooklyn Heights', 205.5078125],
+          ['Sunnyside', 89.960629921259837],
+          ['Ridgewood', 82.13274336283186],
+          ['Downtown Brooklyn', 190.3362831858407],
+          ['Gowanus', 177.42574257425741],
+          ['Ditmars / Steinway', 93.291666666666671],
+          ['Battery Park City', 348.58241758241758],
+          ['Bay Ridge', 83.670588235294119],
+          ['Jamaica', 75.776470588235298],
+          ['Jackson Heights', 92.444444444444443],
+          ['Meatpacking District', 288.64383561643837],
+          ['Kensington', 102.38888888888889],
+          ['Inwood', 86.588235294117652],
+          ['Windsor Terrace', 139.93548387096774],
+          ['Forest Hills', 100.18032786885246],
+          ['Times Square/Theatre District', 232.49180327868854],
+          ['Union Square', 378.06666666666666],
+          ['East Flatbush', 97.775862068965523],
+          ['Flushing', 98.981818181818184],
+          ['Noho', 295.33962264150944],
+          ['Brooklyn Navy Yard', 124.72340425531915],
+          ['Hudson Square', 248.06382978723406],
+          ['East New York', 72.765957446808514],
+          ['Woodside', 75.276595744680847],
+          ['Little Italy', 409.52173913043481],
+          ['Cobble Hill', 164.48837209302326],
+          ['The Rockaways', 114.74418604651163],
+          ['Richmond Hill', 170.65853658536585],
+          ['Roosevelt Island', 124.33333333333333],
+          ['Red Hook', 150.84210526315789],
+          ['St. George', 141.27027027027026],
+          ['DUMBO', 231.20588235294119],
+          ['Elmhurst', 69.090909090909093],
+          ['Canarsie', 82.454545454545453],
+          ['Midwood', 232.875],
+          ['Rego Park', 89.400000000000006],
+          ['Sheepshead Bay', 103.85714285714286],
+          ['South Williamsburg', 147.96428571428572],
+          ['Civic Center', 198.03999999999999],
+          ['North Williamsburg', 152.13636363636363],
+          ['Corona', 76.666666666666671],
+          ['South Street Seaport', 217.42857142857142],
+          ['Yorkville', 152.36842105263159],
+          ['Maspeth', 72.89473684210526],
+          ['Baychester', 62.944444444444443],
+          ['Brighton Beach', 118.70588235294117],
+          ['Manhattan', 127.94117647058823],
+          ['Concourse', 90.86666666666666],
+          ['Bensonhurst', 102.07142857142857],
+          ['Mott Haven', 66.642857142857139],
+          ['Riverdale', 115.07142857142857],
+          ['East Williamsburg', 101.0],
+          ['Gravesend', 104.53846153846153],
+          ['Stuyvesant Heights', 162.46153846153845],
+          ['Flatlands', 84.07692307692308],
+          ['Coney Island', 123.61538461538461],
+          ['Greenwood Heights', 123.30769230769231],
+          ['Woodhaven', 92.0],
+          ['Port Morris', 106.3],
+          ['Midland Beach', 85.400000000000006],
+          ['Concourse Village', 78.799999999999997],
+          ['Bayside', 121.0],
+          ['Soundview', 51.222222222222221],
+          ['Brooklyn', 123.11111111111111],
+          ['Claremont', 52.625],
+          ['Rosebank', 68.875],
+          ['Times Square', 186.875],
+          ['Kingsbridge Heights', 89.375],
+          ['Ozone Park', 53.571428571428569],
+          ['East Elmhurst', 72.0],
+          ['West Brighton', 54.571428571428569],
+          ['City Island', 96.714285714285708],
+          ['Fordham', 79.428571428571431],
+          ['Allerton', 54.5],
+          ['Bedford Park', 75.333333333333329],
+          ['Middle Village', 122.33333333333333],
+          ['Westchester Village', 74.666666666666671],
+          ['Whitestone', 140.5],
+          ['Concord', 96.333333333333329],
+          ['Glendale', 92.166666666666671],
+          ['South Ozone Park', 124.8],
+          ['University Heights', 72.0],
+          ['Wakefield', 99.0],
+          ['Kew Garden Hills', 131.59999999999999],
+          ['College Point', 127.2],
+          ['Woodlawn', 140.59999999999999],
+          ['Spuyten Duyvil', 106.8],
+          ['Hillcrest', 111.8],
+          ['Meiers Corners', 89.0],
+          ['South Beach', 243.75],
+          ['Melrose', 60.75],
+          ['Westerleigh', 608.75],
+          ['Randall Manor', 254.25],
+          ['Marble Hill', 97.5],
+          ['Norwood', 86.0],
+          ['Mount Eden', 46.666666666666664],
+          ['Todt Hill', 58.333333333333336],
+          ['Dyker Heights', 67.333333333333329],
+          ['Highbridge', 65.0],
+          ['Elm Park', 126.66666666666667],
+          ['Williamsbridge', 81.333333333333329],
+          ['Bronxdale', 78.333333333333329],
+          ['Kingsbridge', 75.0],
+          ['Park Versailles', 56.666666666666664],
+          ['Castle Hill ', 65.0],
+          ['Parkchester', 110.0],
+          ['Tompkinsville', 88.0],
+          ['Tremont', 66.333333333333329],
+          ['Longwood', 123.33333333333333],
+          ['Graniteville', 126.66666666666667],
+          ['Stapleton', 65.5],
+          ['Queens', 86.5],
+          ['Pelham Bay', 64.5],
+          ['Mariners Harbor', 90.0],
+          ['Country Club', 119.5],
+          ['New Dorp', 189.5],
+          ['Crotona', 65.5],
+          ['Morrisania', 116.0],
+          ['Van Nest', 50.0],
+          ['Fresh Meadows', 250.0],
+          ['Oakwood', 79.0],
+          ['Columbia Street Waterfront', 155.0],
+          ['Morris Park', 69.0],
+          ['Huguenot', 700.0],
+          ['Bay Terrace', 59.0],
+          ['Great Kills', 1500.0],
+          ['Lighthouse HIll', 175.0],
+          ['Howard Beach', 119.0],
+          ['The Bronx', 65.0],
+          ['Castleton Corners', 100.0],
+          ['Utopia', 125.0],
+          ['Bergen Beach', 100.0],
+          ['Staten Island', 59.0],
+          ['Borough Park', 60.0],
+          ['Emerson Hill', 100.0],
+          ['Edenwald', 135.0],
+          ['Tottenville', 219.0],
+          ['Grymes Hill', 86.0],
+          ['Vinegar Hill', 120.0],
+          ['Very young neighborhood yet a bit removed from the drunken craziness so you have the luxury of sleeping on a very quiet street but walking just a few blocks to the fun.',
+           115.0],
+          ['New Springville', 58.0],
+          ['Throgs Neck', 120.0],
+          ['Bath Beach', 49.0],
+          ['Dupont Circle', 250.0],
+          ['Eastchester', 80.0],
+          ['Theatre District', 115.0],
+          ['Clifton', 65.0],
+          ['New Brighton', 95.0],
+          ['Grant City', 200.0]]
+\end{Verbatim}
+        
+    \subsubsection{Correlations between price and features of
+home}\label{correlations-between-price-and-features-of-home}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{} get correlations on price}
+         \PY{n}{corrs\PYZus{}dict} \PY{o}{=} \PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{to\PYZus{}dict}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} delete irrelevant features}
+         \PY{k}{for} \PY{n}{var} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weekly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{monthly\PYZus{}price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scrape\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{host\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{k}{del} \PY{n}{corrs\PYZus{}dict}\PY{p}{[}\PY{n}{var}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} sort by correlation value}
+         \PY{n}{price\PYZus{}corrs} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{corrs\PYZus{}dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{n}{operator}\PY{o}{.}\PY{n}{itemgetter}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} break into two lists}
+         \PY{n}{features}\PY{p}{,} \PY{n}{corrs} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{price\PYZus{}corrs}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} plot correlations}
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Correlation with Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Correlations Between Price and Various Features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{corrs}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{features}\PY{p}{,} \PY{n}{rotation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{vertical}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{corrs}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{corrs}\PY{p}{,} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_35_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Relationship between price and
+time}\label{relationship-between-price-and-time}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} method to convert date to day of week}
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{datetime}\PY{o}{.}\PY{n}{datetime}\PY{o}{.}\PY{n}{strptime}\PY{p}{(}\PY{n}{date}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{Y\PYZhy{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{date\PYZus{}prices} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{date}\PY{p}{:} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{date} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+         \PY{n}{day\PYZus{}prices} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)}\PY{p}{:} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{date} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+         \PY{n}{day\PYZus{}counts} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)}\PY{p}{:} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{date} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+         
+         \PY{k}{for} \PY{n}{date} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{prices} \PY{o}{=} \PY{p}{[}\PY{n}{p} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{date}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{]}
+             \PY{n}{date\PYZus{}prices}\PY{p}{[}\PY{n}{date}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{prices}\PY{p}{)}
+             \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{prices}\PY{p}{)}
+             \PY{n}{day\PYZus{}counts}\PY{p}{[}\PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{prices}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{for} \PY{n}{day}\PY{p}{,} \PY{n}{price\PYZus{}sum} \PY{o+ow}{in} \PY{n}{day\PYZus{}prices}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{n}{day}\PY{p}{]} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{n}{day}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n}{day\PYZus{}counts}\PY{p}{[}\PY{n}{day}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ordered\PYZus{}date\PYZus{}prices} \PY{o}{=} \PY{p}{[}\PY{n}{value} \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{date\PYZus{}prices}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{367}\PY{p}{)}\PY{p}{,} \PY{n}{ordered\PYZus{}date\PYZus{}prices}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,} \PY{p}{[}\PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Monday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tuesday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Wednesday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Thursday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Friday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Saturday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}prices}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sunday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Label axes, set title}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Nighly Price Over Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Days after January 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Nighly Price By Day of Week}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Day of Week \PYZhy{} Monday is 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_40_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{c+c1}{\PYZsh{} dictionary to contain means}
+         \PY{n}{listing\PYZus{}means} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{listing}\PY{p}{:} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{listing} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+         
+         \PY{c+c1}{\PYZsh{} calculate mean prices for each listing}
+         \PY{k}{for} \PY{n}{listing} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{listing\PYZus{}means}\PY{p}{[}\PY{n}{listing}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{listing}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} convert to numpy for efficiency}
+         \PY{n}{prices} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ids} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{listing\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{diff\PYZus{}means} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{prices}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n}{diff\PYZus{}means}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{prices}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{listing\PYZus{}means}\PY{p}{[}\PY{n}{ids}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{)} 
+             
+         \PY{c+c1}{\PYZsh{} add to calendar df}
+         \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diff\PYZus{}mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{diff\PYZus{}means}\PY{p}{)}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{n}{calendar\PYZus{}df}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{c+c1}{\PYZsh{} calculate average difference from means over all listings}
+         \PY{n}{avg\PYZus{}diff\PYZus{}means} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{date}\PY{p}{:} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{date} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{date}\PY{p}{,} \PY{n}{mean} \PY{o+ow}{in} \PY{n}{avg\PYZus{}diff\PYZus{}means}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{n}{date}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{date}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diff\PYZus{}mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} calculate average difference from means by day of week}
+         \PY{c+c1}{\PYZsh{} convert to numpy for speed}
+         \PY{n}{dates} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)}\PY{p}{:} \PY{l+m+mi}{0} \PY{k}{for} \PY{n}{date} \PY{o+ow}{in} \PY{n}{calendar\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{prices}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{dates}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{diff\PYZus{}means}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+         \PY{k}{for} \PY{n}{day}\PY{p}{,} \PY{n}{avg\PYZus{}diff} \PY{o+ow}{in} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{n}{day}\PY{p}{]} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{n}{day}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n}{day\PYZus{}counts}\PY{p}{[}\PY{n}{day}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ordered\PYZus{}avg\PYZus{}diff\PYZus{}means} \PY{o}{=} \PY{p}{[}\PY{n}{value} \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{avg\PYZus{}diff\PYZus{}means}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{367}\PY{p}{)}\PY{p}{,} \PY{n}{ordered\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,} \PY{p}{[}\PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Monday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tuesday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Wednesday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Thursday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Friday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Saturday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{day\PYZus{}avg\PYZus{}diff\PYZus{}means}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sunday}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Label axes, set title}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Difference from Listing}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{s Own Mean Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Days after January 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Difference from Listing}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{s Own Mean Price by Day of Week}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Day of Week \PYZhy{} Monday is 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_43_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{c+c1}{\PYZsh{} examine priciest and cheapest dates}
+         \PY{n}{sorted\PYZus{}avg\PYZus{}diffs} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{avg\PYZus{}diff\PYZus{}means}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dates with lowest average differences from mean:}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{date}\PY{p}{,} \PY{n}{diff} \PY{o+ow}{in} \PY{n}{sorted\PYZus{}avg\PYZus{}diffs}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{15}\PY{p}{]}\PY{p}{:}
+             \PY{k}{print} \PY{n}{date} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: \PYZdl{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{diff}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+             
+         \PY{k}{print} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Dates with highest average differences from mean:}\PY{l+s+s1}{\PYZsq{}}
+         \PY{k}{for} \PY{n}{date}\PY{p}{,} \PY{n}{diff} \PY{o+ow}{in} \PY{n}{sorted\PYZus{}avg\PYZus{}diffs}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{15}\PY{p}{:}\PY{p}{]}\PY{p}{:}
+             \PY{k}{print} \PY{n}{date} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{get\PYZus{}day}\PY{p}{(}\PY{n}{date}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: \PYZdl{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{diff}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Dates with lowest average differences from mean:
+2015-01-21, Wednesday: \$-9.01
+2015-01-20, Tuesday: \$-8.99
+2015-01-27, Tuesday: \$-8.85
+2015-01-22, Thursday: \$-8.76
+2015-01-26, Monday: \$-8.76
+2015-01-19, Monday: \$-8.71
+2015-01-28, Wednesday: \$-8.68
+2015-01-14, Wednesday: \$-8.6
+2015-01-13, Tuesday: \$-8.59
+2015-01-15, Thursday: \$-8.55
+2015-01-29, Thursday: \$-8.48
+2015-01-12, Monday: \$-8.44
+2015-01-25, Sunday: \$-8.35
+2015-01-07, Wednesday: \$-8.3
+2015-01-06, Tuesday: \$-8.13
+
+Dates with highest average differences from mean:
+2015-05-08, Friday: \$5.18
+2015-05-09, Saturday: \$5.19
+2015-05-15, Friday: \$5.22
+2015-07-03, Friday: \$5.23
+2015-05-16, Saturday: \$5.24
+2015-05-29, Friday: \$5.24
+2015-05-30, Saturday: \$5.24
+2015-07-04, Saturday: \$5.25
+2015-05-02, Saturday: \$5.29
+2015-05-01, Friday: \$5.29
+2015-05-22, Friday: \$5.39
+2015-05-23, Saturday: \$5.42
+2015-01-03, Saturday: \$5.44
+2015-01-02, Friday: \$10.0
+2015-01-01, Thursday: \$14.76
+
+    \end{Verbatim}
+
+    \subsubsection{Visualize the target variable to understand skewness and
+identify transformation that might be
+necessary}\label{visualize-the-target-variable-to-understand-skewness-and-identify-transformation-that-might-be-necessary}
+
+The target variable ``price'' was analyzed to investigate the the
+distribution of the data. The histogram below shows that the variable is
+skewed right. This indicates that there are large outliers in price and
+that the target variable would need to be transformed to create a normal
+distribution that would be beneficial for predictive modeling.
+
+A log transformation was conducted on the target variable ``price''.
+This transformation resulted in a normal distribution that would be
+ideal for predictive modeling.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Untransformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}35}]:} <matplotlib.text.Text at 0x13c1defd0>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_46_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    As a second level of analysis, the price variable was visulaized by a
+boxplot. This visualization confirms the extreme outliers for price and
+the need to transform the target variable.
+
+The log transformed ``price'' variable was analyzed further by a boxplot
+to confirm that the outlier prices were now within a reasonable range.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Untransformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}36}]:} <matplotlib.text.Text at 0x14c51ed10>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_48_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{listings\PYZus{}df}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{column}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{by} \PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{room\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Boxplot for Log Transformed Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}37}]:} <matplotlib.text.Text at 0x1692532d0>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_49_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Untransformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Review Scores Rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{review\PYZus{}scores\PYZus{}rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Review Scores Rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}38}]:} <matplotlib.text.Text at 0x169c7ad90>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_50_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Untransformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}39}]:} <matplotlib.text.Text at 0x13c81efd0>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_51_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Untransformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{listings\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price\PYZus{}log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transformed Price Target Variable}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}40}]:} <matplotlib.text.Text at 0x13cf62650>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{airbnb_Milestone3_files/airbnb_Milestone3_52_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
